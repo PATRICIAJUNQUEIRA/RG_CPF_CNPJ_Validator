@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de CPF/CNPJ e RG-SP</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <script src="validacao.js"></script>
+    <script>
+        function valida_cpf() {
+            var cpf = document.getElementById('cpf');
+            if (cpf.value.length === 3 || cpf.value.length === 7) {
+                cpf.value += ".";
+            } else if (cpf.value.length === 11) {
+                cpf.value += "-";
+            }
+        }
+
+        function valida_cnpj() {
+            var cnpj = document.getElementById('cnpj');
+            if (cnpj.value.length === 2 || cnpj.value.length === 6) {
+                cnpj.value += ".";
+            } else if (cnpj.value.length === 10 || cnpj.value.length === 15) {
+                cnpj.value += "/";
+            } else if (cnpj.value.length === 18) {
+                cnpj.value += "-";
+            }
+        }
+
+        function valida_rg() {
+            var rg = document.getElementById('rg');
+            if (rg.value.length === 2 || rg.value.length === 6) {
+                rg.value += ".";
+            } else if (rg.value.length === 9) {
+                rg.value += "-";
+            }
+        }
+
+        function validarCPFouCNPJ() {
+            var cpfCnpj = document.getElementById('cpfCnpj').value;
+            var resultCPFouCNPJ = document.getElementById('resultadoCPFouCNPJ');
+            var cpfCnpjSemEspacos = cpfCnpj.replace(/[^\d]/g, '');
+
+            if (cpfCnpjSemEspacos.length === 11 && validarCPF(cpfCnpjSemEspacos)) {
+                resultCPFouCNPJ.textContent = "CPF válido!";
+            } else if (cpfCnpjSemEspacos.length === 14 && validarCNPJ(cpfCnpjSemEspacos)) {
+                resultCPFouCNPJ.textContent = "CNPJ válido!";
+            } else {
+                resultCPFouCNPJ.textContent = "Documento inválido!";
+            }
+        }
+
+        function validarRGSP() {
+            var rgSP = document.getElementById('rgSP').value;
+            var resultRGSP = document.getElementById('resultadoRGSP');
+
+            rgSP = rgSP.replace(/[^\d]/g, '');
+
+            if (rgSP.length === 9) {
+                resultRGSP.textContent = "RG-SP válido!";
+            } else {
+                resultRGSP.textContent = "RG-SP inválido!";
+            }
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <form action="index.html" method="post">
+        <label for="CPF/CNPJ">CPF/CNPJ:</label>
+        <input type="text" id="cpfCnpj" autocomplete="off" maxlength="18" oninput="valida_cpf_cnpj();">
+
+
+        <a href="#" class="animated-button1" onclick="validarCPFouCNPJ()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Validar CPF/CNPJ
+        </a>
+        <p id="resultadoCPFouCNPJ"></p>
+
+        <label for="RG-SP">RG-SP:</label>
+        <input type="text" id="rgSP" autocomplete="off" maxlength="12" oninput="valida_rg();">
+
+        <a href="#" class="animated-button1" onclick="validarRGSP()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Validar RG-SP
+        </a>
+        <p id="resultadoRGSP"></p>
+
+    </form>
+</body>
+
+</html>
